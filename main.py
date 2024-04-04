@@ -9,8 +9,8 @@ count = random.randint(0, nn)
 numRx = 24
 numTx = 24
 
-freq = [1e9]
-# freq = [1e9, 2e9, 3e9]
+# freq = [1e9]
+freq = [1e9, 2e9, 3e9]
 
 for f in freq:
     A = np.ones(numTx)

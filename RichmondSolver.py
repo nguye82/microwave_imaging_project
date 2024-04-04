@@ -276,7 +276,7 @@ if __name__ == "__main__":
     # np.random.seed()
     # np.random.shuffle(randomPerm)
 
-    nn = 500  # no. of data that you want to generate
+    nn = 620  # no. of data that you want to generate
     count = random.randint(0, X_train.shape[0]-nn)
     # lets set up the forward solver
     freq = 1e9
@@ -291,8 +291,8 @@ if __name__ == "__main__":
 
     targetNx = X_train[count].shape[0]
     targetNy = X_train[count].shape[1]
-    domainNx = 35
-    domainNy = 35
+    domainNx = 28 #35
+    domainNy = 28
     backgroundPerm = 1
     epsBackground = np.ones((domainNy, domainNx)) * backgroundPerm
 
@@ -318,8 +318,8 @@ if __name__ == "__main__":
     X, Y = np.meshgrid(xCentroids, yCentroids)
 
     # target grid stuff
-    xTargetMax = 0.075
-    xTargetMin = -0.075
+    xTargetMax = 0.15 #0.075
+    xTargetMin = -0.15
     yTargetMax = xTargetMax
     yTargetMin = xTargetMin
 
@@ -330,7 +330,7 @@ if __name__ == "__main__":
     xCentroidsTarg = np.reshape(xCentroidsTarg, (targetNx, 1))
     yCentroidsTarg = np.reshape(yCentroidsTarg, (targetNy, 1))
 
-    obsRadius = 0.15  # radius
+    obsRadius = 0.25  # radius 0.15
     obsAngle = np.linspace(0, (2 * np.pi - (2 * np.pi / numRx)),
                            numRx)  # radian-based positions of the receiver points.
     obsAngle = np.reshape(obsAngle, (numRx, 1))
@@ -358,11 +358,13 @@ if __name__ == "__main__":
         assert len(coordsWTarget) > 0  # make sure we have a target
         peakPermSpot = random.choice(coordsWTarget)
         peakVal = random.gauss(2.7, 0.25)
-        # now lets loop over the list of coords in the target and apply a perm value proportional to how far it is from the peak
-        for coord in coordsWTarget:
-            diff = np.linalg.norm([peakPermSpot[0] - coord[0], peakPermSpot[1] - coord[1]])
 
-            epsTarget[coord[1], coord[0]] = (peakVal-backgroundPerm) * np.exp(-0.01*diff) + backgroundPerm
+        # this part creates images with different colors
+        # now lets loop over the list of coords in the target and apply a perm value proportional to how far it is from the peak
+        # for coord in coordsWTarget:
+        #     diff = np.linalg.norm([peakPermSpot[0] - coord[0], peakPermSpot[1] - coord[1]])
+
+        #     epsTarget[coord[1], coord[0]] = (peakVal-backgroundPerm) * np.exp(-0.01*diff) + backgroundPerm
 
         # target which needs to be overlayed onto the domain
         epsTargetOnDomain = np.zeros(epsBackground.shape)+backgroundPerm
@@ -379,8 +381,8 @@ if __name__ == "__main__":
                 yTCordsPlotting.append(yCoord)
                 diffX = np.abs(xCentroids - xCoord)
                 diffY = np.abs(yCentroids - yCoord)
-                xIndDomain = np.argmin(diffX)
-                yIndDomain = np.argmin(diffY)
+                xIndDomain = xInd #np.argmin(diffX)
+                yIndDomain = yInd #np.argmin(diffY)
                 xCordsPlotting.append(xCentroids[xIndDomain])
                 yCordsPlotting.append(yCentroids[yIndDomain])
                 epsTargetOnDomain[yIndDomain, xIndDomain] = epsTarget[yInd, xInd]
@@ -393,6 +395,6 @@ if __name__ == "__main__":
         ax[1].scatter(xCordsPlotting, yCordsPlotting)
         plt.show()
         '''
-        fwd.simulate(epsTargetOnDomain, show=False, path = "./MNIST_UNET_24/")
+        fwd.simulate(epsTargetOnDomain, show=False, path = "./EMNIST_img/")
 
-    fwd.writeData("./MNIST_UNET_24/")
+    fwd.writeData("./EMNIST_img/")

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-data = getEMData("./MNIST_UNET_24/")
+data = getEMData("./MNIST_img/")
 # data = getEMData("./TriangleDifFreq/")
 
 
@@ -13,7 +13,7 @@ data = getEMData("./MNIST_UNET_24/")
 # data = data[0]
 # folder_path = "./FreqInRangeImg/"
 
-for i in range(0,2):
+for i in range(0,10):
     target = data[i].target
 
     field = data[i].Esct
@@ -21,7 +21,7 @@ for i in range(0,2):
     # print(np.max(target))
     plt.matshow(field.real)
     plt.matshow(target)
-    # file_name = 'target_pic_sqr.png'
+    # file_name = 'target_pic_emnist_rand_perm.png'
     # file_path = os.path.join(folder_path, file_name)
     # plt.savefig(file_name)
 
