@@ -3,14 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-data = getEMData("./MNIST_img/")
+data = getEMData("./EMNIST_img/")
 # data = getEMData("./TriangleDifFreq/")
 
-
-
-# print(data)
-# print(len(data))
-# data = data[0]
 # folder_path = "./FreqInRangeImg/"
 
 for i in range(0,10):
